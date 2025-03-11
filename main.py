@@ -5,14 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes import admin, product, category, user, order
 from database import engine
 from models import admin as admin_model, product as product_model, category as category_model, user as user_model, order as order_model
-import cloudinary
 
-# Cloudinary sozlamalari
-cloudinary.config(
-    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.getenv("CLOUDINARY_API_KEY"),
-    api_secret=os.getenv("CLOUDINARY_API_SECRET")
-)
 
 app = FastAPI()
 
@@ -31,7 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # Routerlar qo'shish
 app.include_router(admin.router)
