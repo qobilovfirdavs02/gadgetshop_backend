@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
@@ -12,9 +13,9 @@ router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT sozlamalari
-SECRET_KEY = "your-secret-key"  # Real loyihada maxfiy kalit yarating (masalan, openssl rand -hex 32)
+SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-for-local")  # Real loyihada maxfiy kalit yarating (masalan, openssl rand -hex 32)
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login/")
 
