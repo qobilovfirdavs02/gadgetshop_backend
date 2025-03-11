@@ -6,12 +6,18 @@ from database import engine
 from models import admin as admin_model, product as product_model, category as category_model, user as user_model, order as order_model
 import cloudinary
 
+
+
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
+)
+
 app = FastAPI()
 
-origins = [
-    "http://localhost:5173",              # Local development
-    "https://gadgetshop-frontend.vercel.app"  # Vercel’dagi React URL
-]
+origins = ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -20,11 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-cloudinary.config(
-    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.getenv("CLOUDINARY_API_KEY"),
-    api_secret=os.getenv("CLOUDINARY_API_SECRET")
-)
+
 
 app.include_router(admin.router)
 app.include_router(product.router)
