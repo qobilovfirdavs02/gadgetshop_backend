@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import admin, product, category, user, order
@@ -20,9 +21,9 @@ app.add_middleware(
 )
 
 cloudinary.config(
-    cloud_name="dwovp8bhl",  # Dashboard’dan oling
-    api_key="471414582573865",     # Siz bergan API key
-    api_secret="your_api_secret"   # Dashboard’dan olingan secret
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
 )
 
 app.include_router(admin.router)
